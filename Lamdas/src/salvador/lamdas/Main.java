@@ -1,6 +1,7 @@
 package salvador.lamdas;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,12 +24,29 @@ public class Main {
        return stream.collect(Collectors.toList());
    }
 
+   //OBTENER LA SUMA DEL PRECIO UNITARIO DE TODOS LOS PRODUCTOS AGRUPADOS POR EL NÚMERO DE EXISTENCIASEN EL ALMACÉN 
+
+   public List<Product> sumaPrecUnitProd()
+   {
+       List<Product> products = Util.getProducts(); 
+       Stream<Product> stream = products.stream(); 
+       Map<Integer,Double> collect = products.stream().filter(p->p.getName().startsWith("L"))
+         .collect(Collectors.groupingBy(Product::getUnitInStock, Collectors.summingDouble(Product::getUnitPrice))); 
+         System.out.println("UnitStock"+" ; "+"Punitario");  
+         collect.forEach((s,u)->System.out.println(s +";"+u));
+        return stream.collect(Collectors.toList());
+
+   }
+
+
+
 
    public static void main(String args[]) 
    {
        Main m = new Main(); 
       // m.nomProduct().forEach(x-> System.out.println(x)); 
-       m.existMenor10().forEach(p->System.out.println(p));
+      // m.existMenor10().forEach(p->System.out.println(p)); 
+      m.sumaPrecUnitProd();
    } 
 
    
