@@ -1,5 +1,6 @@
 package salvador.lamdas;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,8 +38,14 @@ public class Main {
         return stream.collect(Collectors.toList());
 
    }
-
-
+//MUESTRA LOS NOMBRES DE PRODUCTOS QUE TENGAN UNA EXISTENCIA MENOR a 10 UNIDADES ORD ASC EN EL ALMACEN
+   public List<String> existMenor10OrdAsc()
+   {
+       List<Product> products = Util.getProducts(); 
+       Stream<String> streams = products.stream().filter(p->p.getUnitInStock()<10).sorted(Comparator.comparingDouble(Product::getUnitInStock))
+       .map(Product::getName);
+       return streams.collect(Collectors.toList());
+   }
 
 
    public static void main(String args[]) 
@@ -46,7 +53,8 @@ public class Main {
        Main m = new Main(); 
       // m.nomProduct().forEach(x-> System.out.println(x)); 
       // m.existMenor10().forEach(p->System.out.println(p)); 
-      m.sumaPrecUnitProd();
+      //m.sumaPrecUnitProd();
+      m.existMenor10OrdAsc().forEach(x->System.out.println(x));
    } 
 
    
